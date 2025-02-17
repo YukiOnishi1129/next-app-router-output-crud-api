@@ -11,18 +11,34 @@ import {
 } from "@/types/todo";
 import { ResponseType } from "@/types/ApiResponse";
 
-export const getTodoList = async (): Promise<
-  TodoListResponseType | undefined
-> => {
+export const getTodoList = async () => {
   try {
     const response = await getFetch({
       path: "todos",
       tagName: "getTodoList",
     });
-    const data: TodoListResponseType = await response.json();
-    return data;
+    const data = await response.json();
+    const status = response.status;
+    if (status === 200) {
+      const res: ResponseType<TodoListResponseType> = {
+        status: status,
+        data: data,
+      };
+      return res;
+    }
+    const res: ResponseType = {
+      status: status,
+      errorCode: data.code,
+      errorMessage: data.message,
+    };
+    return res;
   } catch (error) {
-    console.log(error);
+    const res: ResponseType = {
+      status: 500,
+      errorCode: "500",
+      errorMessage: `Internet Server Error: ${error}`,
+    };
+    return res;
   }
 };
 
