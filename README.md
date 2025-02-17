@@ -12,7 +12,6 @@
 - react-hook-form: 7.54.2
 - zod: 3.24.2
 - @hookform/resolvers: 4.0.0
-- axios: 1.7.9
 - @fortawesome/react-fontawesom: 0.2.2
 - @fortawesome/free-solid-svg-icons: 6.2.2
 
