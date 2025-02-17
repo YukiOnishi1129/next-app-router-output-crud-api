@@ -4,6 +4,8 @@ import { useMemo, FC, useCallback, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { StatusCodes } from "http-status-codes";
+
 import { InputFormSection } from "@/components/molecules";
 import { BaseLayout, TodoList } from "@/components/organisms";
 import { TodoType } from "@/types/todo";
@@ -44,7 +46,7 @@ export const TodoListTemplate: FC<TodoListTemplateProps> = ({ data }) => {
       const res = await deleteTodo({
         id,
       });
-      if (res.status !== 204) {
+      if (res.status !== StatusCodes.NO_CONTENT) {
         alert(`${res.status} ${res.errorCode}: ${res.errorMessage}`);
         return;
       }

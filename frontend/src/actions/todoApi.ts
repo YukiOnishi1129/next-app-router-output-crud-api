@@ -1,5 +1,7 @@
 "use server";
 
+import { StatusCodes } from "http-status-codes";
+
 import { getFetch, postFetch, putFetch, deleteFetch } from "@/actions/fetch";
 import {
   TodoListResponseType,
@@ -19,7 +21,7 @@ export const getTodoList = async () => {
     });
     const data = await response.json();
     const status = response.status;
-    if (status === 200) {
+    if (status === StatusCodes.OK) {
       const res: ResponseType<TodoListResponseType> = {
         status: status,
         data: data,
@@ -34,8 +36,8 @@ export const getTodoList = async () => {
     return res;
   } catch (error) {
     const res: ResponseType = {
-      status: 500,
-      errorCode: "500",
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      errorCode: `${StatusCodes.INTERNAL_SERVER_ERROR}`,
       errorMessage: `Internet Server Error: ${error}`,
     };
     return res;
@@ -50,7 +52,7 @@ export const getTodo = async (req: GetTodoRequest) => {
     });
     const data = await response.json();
     const status = response.status;
-    if (status === 200) {
+    if (status === StatusCodes.OK) {
       const res: ResponseType<TodoType> = {
         status: status,
         data: data,
@@ -65,8 +67,8 @@ export const getTodo = async (req: GetTodoRequest) => {
     return res;
   } catch (error) {
     const res: ResponseType = {
-      status: 500,
-      errorCode: "500",
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      errorCode: `${StatusCodes.INTERNAL_SERVER_ERROR}`,
       errorMessage: `Internet Server Error: ${error}`,
     };
     return res;
@@ -81,7 +83,7 @@ export const createTodo = async (req: CreateTodoRequest) => {
     });
     const data = await response.json();
     const status = response.status;
-    if (status === 201) {
+    if (status === StatusCodes.CREATED) {
       const res: ResponseType<TodoType> = {
         status: status,
         data: data,
@@ -96,8 +98,8 @@ export const createTodo = async (req: CreateTodoRequest) => {
     return res;
   } catch (error) {
     const res: ResponseType = {
-      status: 500,
-      errorCode: "500",
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      errorCode: `${StatusCodes.INTERNAL_SERVER_ERROR}`,
       errorMessage: `Internet Server Error: ${error}`,
     };
     const fetchError = error as IErrorResponse;
@@ -112,7 +114,7 @@ export const updateTodo = async (req: UpdateTodoRequest) => {
     const response = await putFetch({ path: `todos/${req.id}`, body: req });
     const data = await response.json();
     const status = response.status;
-    if (status === 200) {
+    if (status === StatusCodes.OK) {
       const res: ResponseType<TodoType> = {
         status: status,
         data: data,
@@ -127,8 +129,8 @@ export const updateTodo = async (req: UpdateTodoRequest) => {
     return res;
   } catch (error) {
     const res: ResponseType = {
-      status: 500,
-      errorCode: "500",
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      errorCode: `${StatusCodes.INTERNAL_SERVER_ERROR}`,
       errorMessage: `Internet Server Error: ${error}`,
     };
     const fetchError = error as IErrorResponse;
@@ -142,7 +144,7 @@ export const deleteTodo = async (req: DeleteTodoRequest) => {
   try {
     const response = await deleteFetch({ path: `todos/${req.id}` });
     const status = response.status;
-    if (status === 204) {
+    if (status === StatusCodes.NO_CONTENT) {
       const res: ResponseType = {
         status: status,
       };
@@ -157,8 +159,8 @@ export const deleteTodo = async (req: DeleteTodoRequest) => {
     return res;
   } catch (error) {
     const res: ResponseType = {
-      status: 500,
-      errorCode: "500",
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      errorCode: `${StatusCodes.INTERNAL_SERVER_ERROR}`,
       errorMessage: `Internet Server Error: ${error}`,
     };
     const fetchError = error as IErrorResponse;
