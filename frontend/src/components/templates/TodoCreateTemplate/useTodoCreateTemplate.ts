@@ -29,10 +29,14 @@ export const useTodoCreateTemplate = () => {
   const handleAddSubmit = handleSubmit(
     useCallback(
       async (values: z.infer<typeof schema>) => {
-        await createTodo({
+        const res = await createTodo({
           title: values.title,
           content: values.content,
         });
+        if (!res?.data) {
+          alert(`${res.status} ${res.errorCode}: ${res.errorMessage}`);
+          return;
+        }
         navigate.push(NAVIGATION_PATH.TOP);
       },
       [navigate]

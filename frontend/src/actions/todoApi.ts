@@ -9,7 +9,7 @@ import {
   //   UpdateTodoRequest,
   //   DeleteTodoRequest,
 } from "@/types/todo";
-import { ResponseType } from "@/types/ApiResponse";
+import { ResponseType, IErrorResponse } from "@/types/ApiResponse";
 
 export const getTodoList = async () => {
   try {
@@ -100,6 +100,9 @@ export const createTodo = async (req: CreateTodoRequest) => {
       errorCode: "500",
       errorMessage: `Internet Server Error: ${error}`,
     };
+    const fetchError = error as IErrorResponse;
+    res.errorCode = fetchError.status.toString();
+    res.errorMessage = fetchError.statusText;
     return res;
   }
 };
