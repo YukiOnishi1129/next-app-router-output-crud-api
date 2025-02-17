@@ -1,11 +1,11 @@
 "use server";
 
-import { getFetch } from "@/actions/fetch";
+import { getFetch, postFetch } from "@/actions/fetch";
 import {
   TodoListResponseType,
   TodoType,
   GetTodoRequest,
-  //   CreateTodoRequest,
+  CreateTodoRequest,
   //   UpdateTodoRequest,
   //   DeleteTodoRequest,
 } from "@/types/todo";
@@ -51,6 +51,37 @@ export const getTodo = async (req: GetTodoRequest) => {
     const data = await response.json();
     const status = response.status;
     if (status === 200) {
+      const res: ResponseType<TodoType> = {
+        status: status,
+        data: data,
+      };
+      return res;
+    }
+    const res: ResponseType = {
+      status: status,
+      errorCode: data.code,
+      errorMessage: data.message,
+    };
+    return res;
+  } catch (error) {
+    const res: ResponseType = {
+      status: 500,
+      errorCode: "500",
+      errorMessage: `Internet Server Error: ${error}`,
+    };
+    return res;
+  }
+};
+
+export const createTodo = async (req: CreateTodoRequest) => {
+  try {
+    const response = await postFetch({
+      path: "todos",
+      body: req,
+    });
+    const data = await response.json();
+    const status = response.status;
+    if (status === 201) {
       const res: ResponseType<TodoType> = {
         status: status,
         data: data,

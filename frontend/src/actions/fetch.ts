@@ -18,3 +18,43 @@ export const getFetch = async ({ path, tagName, cacheType }: GetFetchArgs) => {
     cache: cacheType,
   });
 };
+
+type PostFetchArgs = {
+  path: string;
+  body: Record<string, unknown>;
+};
+
+export const postFetch = async ({ path, body }: PostFetchArgs) => {
+  const header = await headers();
+  return fetch(`${BASE_URL}/${path}`, {
+    method: "POST",
+    headers: new Headers(header),
+    body: JSON.stringify(body),
+  });
+};
+
+type PutFetchArgs = {
+  path: string;
+  body: Record<string, unknown>;
+};
+
+export const putFetch = async ({ path, body }: PutFetchArgs) => {
+  const header = await headers();
+  return fetch(`${BASE_URL}/${path}`, {
+    method: "PUT",
+    headers: new Headers(header),
+    body: JSON.stringify(body),
+  });
+};
+
+type DeleteFetchArgs = {
+  path: string;
+};
+
+export const deleteFetch = async ({ path }: DeleteFetchArgs) => {
+  const header = await headers();
+  return fetch(`${BASE_URL}/${path}`, {
+    method: "DELETE",
+    headers: new Headers(header),
+  });
+};
