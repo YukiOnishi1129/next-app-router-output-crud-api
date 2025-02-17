@@ -1,22 +1,27 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, FC, useCallback, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { StatusCodes } from "http-status-codes";
+
 import { InputFormSection } from "@/components/molecules";
 import { BaseLayout, TodoList } from "@/components/organisms";
-import { useTodoContext } from "@/hooks/useTodoContext";
+import { TodoType } from "@/types/todo";
+import { deleteTodo } from "@/actions/todoApi";
 import styles from "./style.module.css";
 
 const schema = z.object({
   keyword: z.string(),
 });
 
-export const TodoListTemplate = () => {
-  // コンテキストから状態とロジックを呼び出してコンポーネントにあてがう
-  const { originTodoList, deleteTodo } = useTodoContext();
+type TodoListTemplateProps = {
+  data: Array<TodoType>;
+};
 
+export const TodoListTemplate: FC<TodoListTemplateProps> = ({ data }) => {
+  const [originTodoList, setOriginTodoList] = useState(data);
   const { control, watch } = useForm({
     resolver: zodResolver(schema),
     defaultValues: { keyword: "" },
@@ -36,6 +41,20 @@ export const TodoListTemplate = () => {
     // 詳しくはuseMemoを調べてください。
   }, [originTodoList, searchKeyword]);
 
+  const handleDeleteTodo = useCallback(async (id: string, title: string) => {
+    if (window.confirm(`Do you want to delete "${title}"?`)) {
+      const res = await deleteTodo({
+        id,
+      });
+      if (res.status !== StatusCodes.NO_CONTENT) {
+        alert(`${res.status} ${res.errorCode}: ${res.errorMessage}`);
+        return;
+      }
+      // 削除成功時、一覧から削除
+      setOriginTodoList((prev) => prev.filter((todo) => todo.id !== id));
+    }
+  }, []);
+
   return (
     <BaseLayout title={"TodoList"}>
       <div className={styles.container}>
@@ -52,7 +71,7 @@ export const TodoListTemplate = () => {
         {/* Todoリスト一覧表示 */}
         <div className={styles.area}>
           {showTodoList.length > 0 && (
-            <TodoList todoList={showTodoList} handleDeleteTodo={deleteTodo} />
+            <TodoList todoList={showTodoList} onDeleteTodo={handleDeleteTodo} />
           )}
         </div>
       </div>

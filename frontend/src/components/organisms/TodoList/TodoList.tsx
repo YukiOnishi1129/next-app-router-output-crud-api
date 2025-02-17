@@ -9,29 +9,30 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NAVIGATION_PATH } from "@/constants/navigation";
+import { TodoType } from "@/types/todo";
 import styles from "./style.module.css";
 
 type TodoListProps = {
-  todoList: { id: number; title: string }[];
-  handleDeleteTodo: (id: number, title: string) => void;
+  todoList: Array<TodoType>;
+  onDeleteTodo: (id: string, title: string) => void;
 };
 
-export const TodoList: FC<TodoListProps> = ({ todoList, handleDeleteTodo }) => {
+export const TodoList: FC<TodoListProps> = ({ todoList, onDeleteTodo }) => {
   const navigate = useRouter();
 
-  /**
-   * 詳細ページに遷移する処理
-   */
+  // /**
+  //  * 詳細ページに遷移する処理
+  //  */
   const handleMoveDetailPage = useCallback(
-    (id: number) => navigate.push(`${NAVIGATION_PATH.DETAIL}${id}`),
+    (id: string) => navigate.push(`${NAVIGATION_PATH.DETAIL}${id}`),
     [navigate]
   );
 
-  /**
-   * 編集ページに遷移する処理
-   */
+  // /**
+  //  * 編集ページに遷移する処理
+  //  */
   const handleMoveEditPage = useCallback(
-    (id: number) => navigate.push(`${NAVIGATION_PATH.EDIT}${id}`),
+    (id: string) => navigate.push(`${NAVIGATION_PATH.EDIT}${id}`),
     [navigate]
   );
 
@@ -62,7 +63,7 @@ export const TodoList: FC<TodoListProps> = ({ todoList, handleDeleteTodo }) => {
               <FontAwesomeIcon
                 icon={faTrashAlt}
                 size="lg"
-                onClick={() => handleDeleteTodo(todo.id, todo.title)}
+                onClick={() => onDeleteTodo(todo.id, todo.title)}
               />
             </div>
           </div>

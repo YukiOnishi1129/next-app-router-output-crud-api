@@ -3,27 +3,27 @@ import { FC } from "react";
 import { Controller } from "react-hook-form";
 
 import { useTodoEditTemplate } from "./useTodoEditTemplate";
-import { useTodoContext } from "@/hooks/useTodoContext";
+
 import { BaseLayout } from "@/components/organisms";
 import { InputFormSection, TextAreaSection } from "@/components/molecules";
 import { CommonButton } from "@/components/atoms";
+import { TodoType } from "@/types/todo";
 import styles from "./style.module.css";
 
 type TodoEditTemplateProps = {
-  id: string;
+  todo: TodoType;
 };
 
-export const TodoEditTemplate: FC<TodoEditTemplateProps> = ({ id }) => {
-  const { originTodoList, updateTodo } = useTodoContext();
+export const TodoEditTemplate: FC<TodoEditTemplateProps> = ({ todo }) => {
+  // const { originTodoList, updateTodo } = useTodoContext();
 
-  const { todo, control, errors, handleEditSubmit } = useTodoEditTemplate({
-    id,
-    originTodoList,
-    updateTodo,
+  const { control, errors, handleEditSubmit } = useTodoEditTemplate({
+    todo,
   });
 
   return (
     <BaseLayout title={"TodoEdit"}>
+      <div></div>
       {!!todo && (
         <form className={styles.container} onSubmit={handleEditSubmit}>
           <div className={styles.area}>

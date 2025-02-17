@@ -1,7 +1,6 @@
 "use client";
 import { Controller } from "react-hook-form";
 
-import { useTodoContext } from "@/hooks/useTodoContext";
 import { BaseLayout } from "@/components/organisms";
 import { InputFormSection, TextAreaSection } from "@/components/molecules";
 import { CommonButton } from "@/components/atoms";
@@ -9,10 +8,7 @@ import { useTodoCreateTemplate } from "./useTodoCreateTemplate";
 import styles from "./style.module.css";
 
 export const TodoCreateTemplate = () => {
-  const { addTodo } = useTodoContext();
-  const { control, errors, handleAddSubmit } = useTodoCreateTemplate({
-    addTodo,
-  });
+  const { control, errors, handleAddSubmit } = useTodoCreateTemplate();
 
   return (
     <BaseLayout title={"Create Todo"}>

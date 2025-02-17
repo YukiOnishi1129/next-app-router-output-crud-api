@@ -1,9 +1,10 @@
-import { useMemo, useCallback } from "react";
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { updateTodo } from "@/actions/todoApi";
 import { NAVIGATION_PATH } from "@/constants/navigation";
 import { TodoType } from "@/types/todo";
 
@@ -16,22 +17,11 @@ const schema = z.object({
 });
 
 type UseTodoEditTemplateParams = {
-  id: string;
-  originTodoList: Array<TodoType>;
-  updateTodo: (id: number, title: string, content?: string) => void;
+  todo: TodoType;
 };
 
-export const useTodoEditTemplate = ({
-  id,
-  originTodoList,
-  updateTodo,
-}: UseTodoEditTemplateParams) => {
+export const useTodoEditTemplate = ({ todo }: UseTodoEditTemplateParams) => {
   const navigate = useRouter();
-
-  const todo = useMemo(
-    () => originTodoList.find((todo) => String(todo.id) === id),
-    [originTodoList, id]
-  );
 
   const {
     control,
@@ -44,17 +34,24 @@ export const useTodoEditTemplate = ({
 
   const handleEditSubmit = handleSubmit(
     useCallback(
-      (values: z.infer<typeof schema>) => {
+      async (values: z.infer<typeof schema>) => {
         if (!todo) return;
-        updateTodo(todo.id, values.title, values.content);
+        const res = await updateTodo({
+          id: todo.id,
+          title: values.title,
+          content: values.content,
+        });
+        if (!res?.data) {
+          alert(`${res.status} ${res.errorCode}: ${res.errorMessage}`);
+          return;
+        }
         navigate.push(NAVIGATION_PATH.TOP);
       },
-      [updateTodo, navigate, todo]
+      [navigate, todo]
     )
   );
 
   return {
-    todo,
     control,
     errors,
     handleEditSubmit,
