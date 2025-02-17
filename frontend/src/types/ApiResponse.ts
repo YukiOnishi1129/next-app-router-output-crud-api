@@ -1,7 +1,8 @@
 export interface ResponseType<T = undefined> {
-  code: number;
+  status: number;
   data?: T;
-  message?: string;
+  errorCode?: string;
+  errorMessage?: string;
 }
 
 export type IErrorResponse = {

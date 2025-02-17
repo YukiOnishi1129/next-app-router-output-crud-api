@@ -1,15 +1,14 @@
 "use client";
 
-import { FC } from "react";
-// import { useCallback, FC } from "react";
-// import { useRouter } from "next/navigation";
+import { useCallback, FC } from "react";
+import { useRouter } from "next/navigation";
 import {
   faTrashAlt,
   faFile,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { NAVIGATION_PATH } from "@/constants/navigation";
+import { NAVIGATION_PATH } from "@/constants/navigation";
 import { TodoType } from "@/types/todo";
 import styles from "./style.module.css";
 
@@ -19,15 +18,15 @@ type TodoListProps = {
 };
 
 export const TodoList: FC<TodoListProps> = ({ todoList }) => {
-  // const navigate = useRouter();
+  const navigate = useRouter();
 
   // /**
   //  * 詳細ページに遷移する処理
   //  */
-  // const handleMoveDetailPage = useCallback(
-  //   (id: number) => navigate.push(`${NAVIGATION_PATH.DETAIL}${id}`),
-  //   [navigate]
-  // );
+  const handleMoveDetailPage = useCallback(
+    (id: string) => navigate.push(`${NAVIGATION_PATH.DETAIL}${id}`),
+    [navigate]
+  );
 
   // /**
   //  * 編集ページに遷移する処理
@@ -45,7 +44,11 @@ export const TodoList: FC<TodoListProps> = ({ todoList }) => {
           <div className={styles.area}>
             <div className={styles.far}>
               {/* https://www.digitalocean.com/community/tutorials/how-to-use-font-awesome-5-with-react-ja */}
-              <FontAwesomeIcon icon={faFile} size="lg" onClick={() => {}} />
+              <FontAwesomeIcon
+                icon={faFile}
+                size="lg"
+                onClick={() => handleMoveDetailPage(todo.id)}
+              />
             </div>
             <div className={styles.far}>
               {/* https://www.digitalocean.com/community/tutorials/how-to-use-font-awesome-5-with-react-ja */}
