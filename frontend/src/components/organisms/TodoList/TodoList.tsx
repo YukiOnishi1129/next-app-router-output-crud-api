@@ -14,10 +14,10 @@ import styles from "./style.module.css";
 
 type TodoListProps = {
   todoList: Array<TodoType>;
-  handleDeleteTodo: (id: number, title: string) => void;
+  onDeleteTodo: (id: string, title: string) => void;
 };
 
-export const TodoList: FC<TodoListProps> = ({ todoList }) => {
+export const TodoList: FC<TodoListProps> = ({ todoList, onDeleteTodo }) => {
   const navigate = useRouter();
 
   // /**
@@ -60,7 +60,11 @@ export const TodoList: FC<TodoListProps> = ({ todoList }) => {
             </div>
             <div className={styles.far}>
               {/* https://www.digitalocean.com/community/tutorials/how-to-use-font-awesome-5-with-react-ja */}
-              <FontAwesomeIcon icon={faTrashAlt} size="lg" onClick={() => {}} />
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                size="lg"
+                onClick={() => onDeleteTodo(todo.id, todo.title)}
+              />
             </div>
           </div>
         </li>
