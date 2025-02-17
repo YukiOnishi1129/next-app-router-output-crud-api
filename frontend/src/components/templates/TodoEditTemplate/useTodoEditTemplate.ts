@@ -46,7 +46,7 @@ export const useTodoEditTemplate = ({
     useCallback(
       (values: z.infer<typeof schema>) => {
         if (!todo) return;
-        updateTodo(todo.id, values.title, values.content);
+        updateTodo(Number(todo.id), values.title, values.content);
         navigate.push(NAVIGATION_PATH.TOP);
       },
       [updateTodo, navigate, todo]

@@ -1,30 +1,31 @@
 "use client";
 import { FC } from "react";
-import { Controller } from "react-hook-form";
+// import { Controller } from "react-hook-form";
 
-import { useTodoEditTemplate } from "./useTodoEditTemplate";
-import { useTodoContext } from "@/hooks/useTodoContext";
+// import { useTodoEditTemplate } from "./useTodoEditTemplate";
+// import { useTodoContext } from "@/hooks/useTodoContext";
 import { BaseLayout } from "@/components/organisms";
-import { InputFormSection, TextAreaSection } from "@/components/molecules";
-import { CommonButton } from "@/components/atoms";
-import styles from "./style.module.css";
+// import { InputFormSection, TextAreaSection } from "@/components/molecules";
+// import { CommonButton } from "@/components/atoms";
+// import styles from "./style.module.css";
 
 type TodoEditTemplateProps = {
   id: string;
 };
 
-export const TodoEditTemplate: FC<TodoEditTemplateProps> = ({ id }) => {
-  const { originTodoList, updateTodo } = useTodoContext();
+export const TodoEditTemplate: FC<TodoEditTemplateProps> = ({}) => {
+  // const { originTodoList, updateTodo } = useTodoContext();
 
-  const { todo, control, errors, handleEditSubmit } = useTodoEditTemplate({
-    id,
-    originTodoList,
-    updateTodo,
-  });
+  // const { todo, control, errors, handleEditSubmit } = useTodoEditTemplate({
+  //   id,
+  //   originTodoList,
+  //   updateTodo,
+  // });
 
   return (
     <BaseLayout title={"TodoEdit"}>
-      {!!todo && (
+      <div></div>
+      {/* {!!todo && (
         <form className={styles.container} onSubmit={handleEditSubmit}>
           <div className={styles.area}>
             <Controller
@@ -56,7 +57,7 @@ export const TodoEditTemplate: FC<TodoEditTemplateProps> = ({ id }) => {
             <CommonButton type="submit">{"Edit Todo"}</CommonButton>
           </div>
         </form>
-      )}
+      )} */}
     </BaseLayout>
   );
 };
