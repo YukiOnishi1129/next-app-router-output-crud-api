@@ -1,4 +1,5 @@
 import { TodoEditTemplate } from "@/components/templates";
+import { getTodo } from "@/actions/todoApi";
 
 type TodoEditPageProps = {
   params: Promise<{ id: string }>;
@@ -6,5 +7,15 @@ type TodoEditPageProps = {
 
 export default async function TodoEditPage({ params }: TodoEditPageProps) {
   const { id } = await params;
-  return <TodoEditTemplate id={id} />;
+  const res = await getTodo({
+    id,
+  });
+  if (!res?.data) {
+    return (
+      <div>
+        {res.errorCode}: {res.errorMessage}
+      </div>
+    );
+  }
+  return <TodoEditTemplate todo={res.data} />;
 }

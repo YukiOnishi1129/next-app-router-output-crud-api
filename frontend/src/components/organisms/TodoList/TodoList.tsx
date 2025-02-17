@@ -31,10 +31,10 @@ export const TodoList: FC<TodoListProps> = ({ todoList }) => {
   // /**
   //  * 編集ページに遷移する処理
   //  */
-  // const handleMoveEditPage = useCallback(
-  //   (id: number) => navigate.push(`${NAVIGATION_PATH.EDIT}${id}`),
-  //   [navigate]
-  // );
+  const handleMoveEditPage = useCallback(
+    (id: string) => navigate.push(`${NAVIGATION_PATH.EDIT}${id}`),
+    [navigate]
+  );
 
   return (
     <ul className={styles.list}>
@@ -55,7 +55,7 @@ export const TodoList: FC<TodoListProps> = ({ todoList }) => {
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 size="lg"
-                onClick={() => {}}
+                onClick={() => handleMoveEditPage(todo.id)}
               />
             </div>
             <div className={styles.far}>
