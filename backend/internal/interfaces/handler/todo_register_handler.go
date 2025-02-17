@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/YukiOnishi1129/react-output-crud-api/backend/internal/pkg/constants"
+	"github.com/YukiOnishi1129/next-app-router-output-crud-api/backend/internal/pkg/constants"
 	"github.com/gorilla/mux"
 )
 

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	apperrors "github.com/YukiOnishi1129/react-output-crud-api/backend/internal/pkg/errors"
+	apperrors "github.com/YukiOnishi1129/next-app-router-output-crud-api/backend/internal/pkg/errors"
 	"gorm.io/gorm"
 )
 

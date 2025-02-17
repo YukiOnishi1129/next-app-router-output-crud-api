@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	"github.com/YukiOnishi1129/react-output-crud-api/backend/internal/domain"
+	"github.com/YukiOnishi1129/next-app-router-output-crud-api/backend/internal/domain"
 	"github.com/google/uuid"
 )
 

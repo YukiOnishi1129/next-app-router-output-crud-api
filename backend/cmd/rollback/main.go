@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/YukiOnishi1129/react-output-crud-api/backend/internal/domain"
-	"github.com/YukiOnishi1129/react-output-crud-api/backend/internal/pkg/database"
+	"github.com/YukiOnishi1129/next-app-router-output-crud-api/backend/internal/domain"
+	"github.com/YukiOnishi1129/next-app-router-output-crud-api/backend/internal/pkg/database"
 	"github.com/joho/godotenv"
 )
 
